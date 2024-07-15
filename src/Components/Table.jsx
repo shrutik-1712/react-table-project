@@ -1015,6 +1015,7 @@ const Table = () => {
         header: 'ID',
         accessorKey: 'id',
         cell: info => info.getValue(),
+        enableHiding: false,
       },
       {
         header: 'Name',
