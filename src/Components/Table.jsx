@@ -7,11 +7,6 @@ import {
   getSortedRowModel,
   flexRender,
 } from '@tanstack/react-table';
-
-
-// Sample data (as provided earlier)
-
-  // ... (the 10 items from the previous message)
   export const data =
     [
         {
@@ -1015,6 +1010,7 @@ const Table = () => {
         header: 'ID',
         accessorKey: 'id',
         cell: info => info.getValue(),
+        //unable to hide
         enableHiding: false,
       },
       {
@@ -1098,22 +1094,26 @@ const Table = () => {
               {showColumnVisibility ? 'Hide Columns' : 'Show Columns'}
             </button>
           </div>
-          
+
           {showColumnVisibility && (
             <div className="mb-4 p-4 border border-gray-200 rounded-md">
               <h3 className="text-lg font-semibold mb-2">Toggle Columns</h3>
               <div className="flex flex-wrap gap-3">
-                {table.getAllLeafColumns().map(column => (
-                  <label key={column.id} className="flex items-center space-x-2">
-                    <input
-                      type="checkbox"
-                      checked={column.getIsVisible()}
-                      onChange={column.getToggleVisibilityHandler()}
-                      className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out"
-                    />
-                    <span className="text-gray-700">{column.id}</span>
-                  </label>
-                ))}
+                {table.getAllLeafColumns().map(column => {
+                  // Skip the ID column in the toggle list
+                  if (column.id === 'id') return null;
+                  return (
+                    <label key={column.id} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={column.getIsVisible()}
+                        onChange={column.getToggleVisibilityHandler()}
+                        className="form-checkbox h-5 w-5 text-blue-600 transition duration-150 ease-in-out"
+                      />
+                      <span className="text-gray-700">{column.id}</span>
+                    </label>
+                  );
+                })}
               </div>
             </div>
           )}
